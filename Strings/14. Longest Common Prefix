@@ -1,0 +1,37 @@
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        // Initialize an empty string to store the longest common prefix
+        string ans = "";
+
+        // Check if the input vector is empty
+        if (strs.empty()) return ans;
+
+        // Loop through each character of the first string
+        for (int i = 0; i < strs[0].length(); i++) {
+            // Get the current character from the first string
+            char ch = strs[0][i];
+            bool match = true;
+
+            // Compare the current character with the corresponding character in other strings
+            for (int j = 1; j < strs.size(); j++) {
+                // If the current string is shorter than the current index or characters don't match
+                if (strs[j].size() <= i || ch != strs[j][i]) {
+                    match = false;
+                    break;
+                }
+            }
+
+            // If the character does not match in any of the strings, break the loop
+            if (!match) {
+                break;
+            } else {
+                // If the character matches in all strings, add it to the result
+                ans.push_back(ch);
+            }
+        }
+
+        // Return the longest common prefix
+        return ans;
+    }
+};
