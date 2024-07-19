@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        std::unordered_map<int, int> frequencyMap;
+        for (int num : nums) {
+            frequencyMap[num]++;
+        }
+        for (const auto& pair : frequencyMap) {
+            if (pair.second > 1) { // Check if the frequency is 2
+                return pair.first;  // Print the(element)
+            }
+        }
+        return 0;
+    }
+};
