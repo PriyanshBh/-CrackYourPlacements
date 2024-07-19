@@ -1,0 +1,46 @@
+// class Solution {
+// public:
+//     int strStr(string haystack, string needle) {
+//         if (needle.empty()) return 0; // If needle is empty, return 0
+        
+//         int hLen = haystack.length();
+//         int nLen = needle.length();
+        
+//         // Iterate through haystack
+//         for (int i = 0; i <= hLen - nLen; i++) {
+//             // Check if the substring from current position matches needle
+//             if (haystack.substr(i, nLen) == needle) {
+//                 return i;
+//             }
+//         }
+        
+//         return -1; // If needle is not found in haystack
+//     }
+// };
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int hLen = haystack.length(); // Get the length of haystack
+        int nLen = needle.length();   // Get the length of needle
+        
+        // Edge case: if needle is empty, return 0
+        if (nLen == 0) return 0;
+
+        // Iterate through haystack
+        for (int i = 0; i <= hLen - nLen; i++) {
+            // Initialize a variable to track the match length
+            int j = 0;
+            // Compare the characters of haystack and needle
+            while (j < nLen && haystack[i + j] == needle[j]) {
+                j++; // Increment j if characters match
+            }
+            // If the whole needle has been matched, return the starting index
+            if (j == nLen) {
+                return i;
+            }
+        }
+        
+        // If needle is not found in haystack, return -1
+        return -1;
+    }
+};
