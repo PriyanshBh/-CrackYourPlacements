@@ -1,0 +1,34 @@
+#include <stack>
+#include <string>
+
+class Solution {
+public:
+    bool isValid(std::string s) {
+        std::stack<char> stack;
+
+        for (char c : s) {
+            // If the character is an opening bracket, push it onto the stack
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            } 
+            // If the character is a closing bracket
+            else {
+                // Check if the stack is empty
+                if (stack.empty()) {
+                    return false;
+                }
+                char top = stack.top();
+                stack.pop();
+                // Check for matching brackets
+                if ((c == ')' && top != '(') ||
+                    (c == '}' && top != '{') ||
+                    (c == ']' && top != '[')) {
+                    return false;
+                }
+            }
+        }
+
+        // In the end, the stack should be empty if all brackets are matched
+        return stack.empty();
+    }
+};
