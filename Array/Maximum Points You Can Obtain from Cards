@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int maxScore(vector<int>& cardPoints, int k) {
+        int lsum = 0, rsum = 0, max = 0, sum = 0;
+        int n = cardPoints.size();
+        
+        // Calculate the initial sum of the first k cards from the left
+        for (int i = 0; i < k; i++) {
+            lsum += cardPoints[i];
+        }
+        
+        // Initialize max with the initial left sum
+        max = lsum;
+        
+        // Move the window from the left side to the right side
+        for (int i = 0; i < k; i++) {
+            // Subtract the card that is being removed from the left sum
+            lsum -= cardPoints[k - 1 - i];
+            // Add the card that is being added to the right sum
+            rsum += cardPoints[n - 1 - i];
+            // Calculate the current sum of the selected cards
+            sum = lsum + rsum;
+            // Update max if the current sum is greater
+            if (sum > max) {
+                max = sum;
+            }
+        }
+        
+        return max;
+    }
+};
