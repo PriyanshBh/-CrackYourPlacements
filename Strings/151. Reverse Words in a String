@@ -1,0 +1,45 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        int n = s.size();
+        vector<string> words; // Vector to store words
+        int i = 0;
+
+        while (i < n) {
+            // Skip leading spaces
+            while (i < n && s[i] == ' ')
+                i++;
+
+            // Check if we have reached the end of the string
+            if (i >= n)
+                break;
+
+            // Find the beginning of the word
+            int start = i;
+
+            // Move i to the end of the word
+            while (i < n && s[i] != ' ')
+                i++;
+
+            // The end of the word is marked by the current position of i
+            int end = i;
+
+            // Extract the word and add it to the vector
+            words.push_back(s.substr(start, end - start));
+        }
+
+        // Initialize a string to store the result
+        string result;
+
+        // Iterate over the words vector in reverse order and build the result string
+        for (int j = words.size() - 1; j >= 0; j--) {
+            result += words[j]; // Add the current word to the result
+            if (j > 0) { // Add a space after each word except the last one
+                result += " ";
+            }
+        }
+
+        // Return the final result string
+        return result;
+    }
+};
