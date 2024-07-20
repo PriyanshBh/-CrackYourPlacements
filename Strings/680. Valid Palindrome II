@@ -1,0 +1,38 @@
+class Solution {
+public:
+    // Main function to check if the string can be a palindrome after deleting
+    // at most one character
+    bool validPalindrome(string s) {
+        int left =
+            0; // Initialize the left pointer to the beginning of the string
+        int right = s.size() -
+                    1; // Initialize the right pointer to the end of the string
+
+        while (left < right) { // Loop to compare characters from both ends
+            if (s[left] != s[right]) { // If characters do not match
+                int skipl = left + 1;  // Calculate the new left pointer if we
+                                       // skip the left character
+                int skipr = right - 1; // Calculate the new right pointer if we
+                                       // skip the right character
+                // Check if either skipping the left or the right character
+                // results in a palindrome
+                return isPalindrome(s, skipl, right) ||
+                       isPalindrome(s, left, skipr);
+            }
+            left++;  // Move the left pointer one step to the right
+            right--; // Move the right pointer one step to the left
+        }
+        return true; // If no mismatches are found, the string is a palindrome
+    }
+    // Helper function to check if the substring s[left:right+1] is a palindrome
+    bool isPalindrome(const string& s, int left, int right) {
+        while (left < right) { // Loop to compare characters from both ends
+            if (s[left] != s[right]) { // If characters do not match
+                return false;          // It's not a palindrome
+            }
+            left++;  // Move the left pointer one step to the right
+            right--; // Move the right pointer one step to the left
+        }
+        return true; // If all characters match, it is a palindrome
+    }
+};
