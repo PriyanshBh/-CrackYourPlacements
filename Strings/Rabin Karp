@@ -1,0 +1,61 @@
+#include <iostream>
+#include <string>
+#define CHARSET_SIZE 256 // Number of characters in the input alphabet
+
+using namespace std;
+
+// Rabin-Karp algorithm for pattern matching
+void rabinKarp(string pattern, string text, int prime) {
+    int patternLength = pattern.length();
+    int textLength = text.length();
+    int patternHash = 0; // Hash value for the pattern
+    int textHash = 0; // Hash value for the current window of text
+    int hashBase = 1; // The value of CHARSET_SIZE^(patternLength-1)
+
+    // Calculate hashBase = pow(CHARSET_SIZE, patternLength-1) % prime
+    for (int k = 0; k < patternLength - 1; k++) {
+        hashBase = (hashBase * CHARSET_SIZE) % prime;
+    }
+
+    // Calculate the hash value of the pattern and the first window of the text
+    for (int k = 0; k < patternLength; k++) {
+        patternHash = (CHARSET_SIZE * patternHash + pattern[k]) % prime;
+        textHash = (CHARSET_SIZE * textHash + text[k]) % prime;
+    }
+
+    // Slide the pattern over the text one by one
+    for (int i = 0; i <= textLength - patternLength; i++) {
+        // Check the hash values of the current window of text and the pattern
+        // If the hash values match, then check the characters one by one
+        if (patternHash == textHash) {
+            bool matchFound = true;
+            for (int j = 0; j < patternLength; j++) {
+                if (text[i + j] != pattern[j]) {
+                    matchFound = false;
+                    break;
+                }
+            }
+            if (matchFound) {
+                cout << "Pattern found at index " << i << endl;
+            }
+        }
+
+        // Calculate hash value for the next window of text
+        if (i < textLength - patternLength) {
+            textHash = (CHARSET_SIZE * (textHash - text[i] * hashBase) + text[i + patternLength]) % prime;
+
+            // Convert the hash value to positive if it is negative
+            if (textHash < 0) {
+                textHash = (textHash + prime);
+            }
+        }
+    }
+}
+
+int main() {
+    string text = "GEEKS FOR GEEKS";
+    string pattern = "GEEK";
+    int prime = 101; // A prime number to reduce hash collisions
+    rabinKarp(pattern, text, prime);
+    return 0;
+}
