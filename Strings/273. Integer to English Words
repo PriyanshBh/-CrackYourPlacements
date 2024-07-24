@@ -1,0 +1,73 @@
+
+class Solution {
+public:
+    // Helper function to convert numbers less than 1000 to words
+    string convertLessThanThousand(int number) {
+        // Arrays for number words
+        vector<string> units = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+        vector<string> tens = {"Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+
+        string words = "";
+
+        // Handle hundreds place
+        if (number / 100 > 0) {
+            words += units[number / 100 - 1] + " Hundred";
+            number %= 100; // Reduce number to the last two digits
+
+            if (number > 0) {
+                words += " "; // Add space if there are remaining digits
+            }
+        }
+
+        // Handle numbers from 1 to 19
+        if (number > 0 && number < 20) {
+            words += units[number - 1];
+        }
+        // Handle numbers from 20 to 99
+        else if (number >= 20) {
+            words += tens[number / 10 - 2]; // Get the word for the tens place
+
+            if (number % 10) {
+                words += " " + units[number % 10 - 1]; // Add units place word if needed
+            }
+        }
+
+        return words;
+    }
+
+    // Main function to convert number to words
+    string numberToWords(int num) {
+        if (num == 0) {
+            return "Zero";
+        }
+
+        vector<string> thousandLevels = {"", "Thousand", "Million", "Billion"}; // Levels for thousands
+        int levelIndex = 0; // Index to access thousandLevels
+        string result = "";
+
+        // Process each chunk of 1000
+        while (num > 0) {
+            int chunk = num % 1000; // Get the last 3 digits
+            string chunkWords = convertLessThanThousand(chunk); // Convert chunk to words
+
+            if (!chunkWords.empty()) {
+                // Combine chunk words with thousand levels
+                if (!result.empty()) {
+                    result = chunkWords + " " + thousandLevels[levelIndex] + " " + result;
+                } else {
+                    result = chunkWords + (thousandLevels[levelIndex].empty() ? "" : " " + thousandLevels[levelIndex]);
+                }
+            }
+            
+            levelIndex++; // Move to the next thousand level
+            num /= 1000; // Reduce num by a factor of 1000
+        }
+
+        // Remove leading spaces if present
+        while (!result.empty() && result.front() == ' ') {
+            result.erase(result.begin());
+        }
+
+        return result;
+    }
+};
