@@ -1,0 +1,29 @@
+class Solution {
+public:
+    // Main function to generate parentheses
+    std::vector<std::string> generateParenthesis(int n) {
+        std::vector<std::string> result;
+        backtrack(result, "", 0, 0, n); // Initialize backtrack with empty string and 0 open/close parentheses
+        return result;
+    }
+
+private:
+    // Helper function to perform backtracking
+    void backtrack(std::vector<std::string> &result, std::string current, int open, int close, int max) {
+        // If the current string has reached the maximum length (2*n), add it to the result
+        if (current.length() == 2 * max) {
+            result.push_back(current);
+            return;
+        }
+
+        // If the number of open parentheses is less than the max, add an open parenthesis and continue backtracking
+        if (open < max) {
+            backtrack(result, current + '(', open + 1, close, max);
+        }
+
+        // If the number of close parentheses is less than the number of open ones, add a close parenthesis and continue backtracking
+        if (close < open) {
+            backtrack(result, current + ')', open, close + 1, max);
+        }
+    }
+};
