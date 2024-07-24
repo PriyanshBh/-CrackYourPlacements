@@ -1,0 +1,52 @@
+class Solution {
+public:
+    int calculate(string s) {
+        stack<int> stk; // Stack to store intermediate results and operands
+        int currentNumber = 0; // Variable to build the current number as we parse the string
+        char operation = '+'; // Variable to store the current operation; initialized to '+' for the first number
+        int n = s.length(); // Length of the input string
+
+        for (int i = 0; i < n; ++i) {
+            char currentChar = s[i]; // Current character in the string
+
+            // If the character is a digit, form the current number
+            if (isdigit(currentChar)) {
+                currentNumber = (currentNumber * 10) + (currentChar - '0');
+            }
+
+            // If the character is an operator or the end of the string is reached
+            if (!isdigit(currentChar) && !iswspace(currentChar) || i == n - 1) {
+                // Process the previous operation
+                if (operation == '+') {
+                    stk.push(currentNumber); // Push the current number to the stack for addition
+                }
+                if (operation == '-') {
+                    stk.push(-currentNumber); // Push the negative of the current number for subtraction
+                }
+                if (operation == '*') {
+                    int top = stk.top(); // Get the top of the stack
+                    stk.pop(); // Remove the top element from the stack
+                    stk.push(top * currentNumber); // Push the result of multiplication back to the stack
+                }
+                if (operation == '/') {
+                    int top = stk.top(); // Get the top of the stack
+                    stk.pop(); // Remove the top element from the stack
+                    stk.push(top / currentNumber); // Push the result of division back to the stack
+                }
+
+                // Update the operation and reset the current number
+                operation = currentChar;
+                currentNumber = 0;
+            }
+        }
+
+        // Sum up all the numbers in the stack to get the final result
+        int result = 0;
+        while (!stk.empty()) {
+            result += stk.top(); // Add the top element to the result
+            stk.pop(); // Remove the top element from the stack
+        }
+
+        return result; // Return the final calculated result
+    }
+};
