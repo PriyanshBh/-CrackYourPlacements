@@ -1,0 +1,14 @@
+class Solution{
+    public:
+    std::string convertToTitle(int columnNumber) {
+        std::string result = "";
+        while (columnNumber > 0) {
+            columnNumber--; // Adjust to zero-based index
+            int remainder = columnNumber % 26;
+            char ch = 'A' + remainder;
+            result = ch + result;
+            columnNumber /= 26;
+        }
+        return result;
+    }
+};
