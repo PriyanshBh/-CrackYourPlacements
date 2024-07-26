@@ -1,0 +1,15 @@
+class Solution {
+  public:
+    int findPair(int n, int x, vector<int> &arr) {
+        std::unordered_set<int> s;
+
+    for (int i = 0; i < n; ++i) {
+        if (s.find(arr[i] + x) != s.end() || s.find(arr[i] - x) != s.end()) {
+            return 1;
+        }
+        s.insert(arr[i]);
+    }
+    return -1;
+
+    }
+};
