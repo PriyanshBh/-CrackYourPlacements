@@ -1,0 +1,47 @@
+class Solution{
+  public:
+     <long long int> productExceptSelf(std::vector<long long int>& nums, int n) {
+    // Initialize the result array with zeros
+    std::vector<long long int> result(n, 0);
+    
+    // Variable to store the total product of all non-zero elements
+    long long int total_product = 1;
+    
+    // Variable to count the number of zeros in the input array
+    int zero_count = 0;
+
+    // Calculate the total product of non-zero elements and count the number of zeros
+    for (int i = 0; i < n; ++i) {
+        if (nums[i] != 0) {
+            // Multiply the current element to total_product if it's non-zero
+            total_product *= nums[i];
+        } else {
+            // Increment zero count if the current element is zero
+            zero_count++;
+        }
+    }
+
+    // Handle different cases based on the number of zeros in the array
+    if (zero_count > 1) {
+        // If there are more than one zero, all elements in result should be zero
+        return result;
+    } else if (zero_count == 1) {
+        // If there is exactly one zero, only one element in result will be non-zero
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] == 0) {
+                // Set the element at the position of zero to the total product of non-zero elements
+                result[i] = total_product;
+            }
+        }
+    } else {
+        // If there are no zeros, calculate product except self for each element
+        for (int i = 0; i < n; ++i) {
+            // Divide the total product by the current element to get the product except self
+            result[i] = total_product / nums[i];
+        }
+    }
+
+    // Return the result array
+    return result;
+}
+};
