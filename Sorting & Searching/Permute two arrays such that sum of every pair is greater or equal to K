@@ -1,0 +1,15 @@
+string canPermuteArrays(vector<int>& a, vector<int>& b, int k) {
+    int n = a.size();
+    
+    // Sort array a in ascending order
+    sort(a.begin(), a.end());
+    
+    // Sort array b in descending order
+    sort(b.begin(), b.end(), greater<int>());
+    
+    // Check if all pairs satisfy the condition
+    for (int i = 0; i < n; ++i) {
+        if (a[i] + b[i] < k) {
+            return "No";
+        }
+    }
