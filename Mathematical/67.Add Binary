@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        string result = ""; // Initialize the result string
+        int carry = 0; // Initialize carry
+        int i = a.length() - 1; // Pointer for string a
+        int j = b.length() - 1; // Pointer for string b
+
+        // Process both strings from the end to the beginning
+        while (i >= 0 || j >= 0 || carry) {
+            // Add the current bit of string a if available
+            if (i >= 0) {
+                carry += a[i] - '0';
+                i--;
+            }
+            // Add the current bit of string b if available
+            if (j >= 0) {
+                carry += b[j] - '0';
+                j--;
+            }
+            // Append the result of carry % 2 (current bit)
+            result += (carry % 2) + '0';
+            // Update carry for the next iteration
+            carry /= 2;
+        }
+
+        // Reverse the result string as we processed from least significant bit to most significant
+        reverse(result.begin(), result.end());
+
+        return result;
+    }
+};
