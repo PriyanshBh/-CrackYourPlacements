@@ -1,0 +1,27 @@
+int findCeiling(const vector<int>& arr, int x) {
+    int ceiling = -1; // Default result if no ceiling is found
+
+    for (int num : arr) {
+        if (num >= x) {
+            if (ceiling == -1 || num < ceiling) {
+                ceiling = num;
+            }
+        }
+    }
+
+    return ceiling;
+}
+
+int findFloor(const vector<int>& arr, int x) {
+    int floor = -1; // Default result if no floor is found
+
+    for (int num : arr) {
+        if (num <= x) {
+            if (floor == -1 || num > floor) {
+                floor = num;
+            }
+        }
+    }
+
+    return floor;
+}
