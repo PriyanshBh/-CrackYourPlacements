@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int minMoves2(std::vector<int>& nums) {
+        int n = nums.size();
+        std::sort(nums.begin(), nums.end());
+        
+        // Calculate the median
+        int median = (n % 2 == 0) ? (nums[n / 2 - 1] + nums[n / 2]) / 2 : nums[n / 2];
+        
+        int moves = 0;
+        for (int i : nums) {
+            moves += std::abs(median - i); // Accumulate the total moves
+        }
+        
+        return moves; 
+    }
+};
